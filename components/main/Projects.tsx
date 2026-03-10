@@ -27,6 +27,31 @@ const Projects = () => {
           description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
         />
       </div>
+
+      <div className="h-full w-full flex flex-col md:flex-row gap-10 px-10 mt-10">
+        <ProjectCard
+          src="/homelab.png"
+          title="Homelab"
+          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        />
+        <ProjectCard
+          src="/firewall.png"
+          title="Firewalling"
+          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          links={[
+            { label: "Installation et première configuration", href: "/firewall" },
+            { label: "Configuration du HA (High Availability)", href: "/firewall" },
+            { label: "Mise en place du FortiManager et FortiAnalyzer", href: "/firewall" },
+            { label: "Configuration du routage", href: "/firewall" },
+            { label: "Matrice de flux", href: "/firewall" },
+          ]}
+        />
+        <ProjectCard
+          src="/switching.png"
+          title="Switching"
+          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        />
+      </div>
     </div>
   );
 };

@@ -11,41 +11,48 @@ const Navbar = () => {
           className="h-auto w-auto flex flex-row items-center"
         >
           <Image
-            src="/NavLogo.png"
+            src="/LogoPortfolio.png"
             alt="logo"
-            width={70}
-            height={70}
+            width={40}
+            height={40}
             className="cursor-pointer hover:animate-slowspin"
           />
 
           <span className="font-bold ml-[10px] hidden md:block text-gray-300">
-            WebChain Dev
+            Brian SANCHIS
           </span>
         </a>
 
         <div className="w-[500px] h-full flex flex-row items-center justify-between md:mr-20">
           <div className="flex items-center justify-between w-full h-auto border border-[#7042f861] bg-[#0300145e] mr-[15px] px-[20px] py-[10px] rounded-full text-gray-200">
             <a href="#about-me" className="cursor-pointer">
-              About me
+              Moi
             </a>
             <a href="#skills" className="cursor-pointer">
-              Skills
+              Compétences
             </a>
             <a href="#projects" className="cursor-pointer">
-              Projects
+              Projets
             </a>
           </div>
         </div>
 
         <div className="flex flex-row gap-5">
           {Socials.map((social) => (
-            <Image
-              src={social.src}
-              alt={social.name}
+            <a                              // ← balise manquante
               key={social.name}
-              width={24}
-              height={24}
-            />
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Image
+                src={social.src}
+                alt={social.name}
+                key={social.name}
+                width={24}
+                height={24}
+              />
+            </a>
           ))}
         </div>
       </div>
