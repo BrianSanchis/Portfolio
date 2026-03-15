@@ -17,30 +17,14 @@ const Footer = () => {
                 
 
                 <div className="min-w-[200px] h-auto flex flex-col items-center justify-start">
-                    <div className="font-bold text-[16px]">Community</div>
-                    <p className="flex flex-row items-center my-[15px] cursor-pointer">
-                        <FaYoutube />
-                        <span className="text-[15px] ml-[6px]">Youtube</span>    
-                    </p>
+                    <div className="font-bold text-[16px]">Communauté</div>
                     <p className="flex flex-row items-center my-[15px] cursor-pointer">
                         <RxGithubLogo />
                         <span className="text-[15px] ml-[6px]">Github</span>    
                     </p>
-                    <p className="flex flex-row items-center my-[15px] cursor-pointer">
-                        <RxDiscordLogo />
-                        <span className="text-[15px] ml-[6px]">Discord</span>    
-                    </p>
                 </div>
                 <div className="min-w-[200px] h-auto flex flex-col items-center justify-start">
-                    <div className="font-bold text-[16px]">Social Media</div>
-                    <p className="flex flex-row items-center my-[15px] cursor-pointer">
-                        <FaYoutube />
-                        <span className="text-[15px] ml-[6px]">Instagram</span>    
-                    </p>
-                    <p className="flex flex-row items-center my-[15px] cursor-pointer">
-                        <RxGithubLogo />
-                        <span className="text-[15px] ml-[6px]">Twitter</span>    
-                    </p>
+                    <div className="font-bold text-[16px]">Réseau social</div>
                     <p className="flex flex-row items-center my-[15px] cursor-pointer">
                         <RxDiscordLogo />
                         <span className="text-[15px] ml-[6px]">Linkedin</span>    
@@ -48,14 +32,6 @@ const Footer = () => {
                 </div>
                 <div className="min-w-[200px] h-auto flex flex-col items-center justify-start">
                     <div className="font-bold text-[16px]">Me contacter</div>
-                   <p className="flex flex-row items-center my-[15px] cursor-pointer">
-                     
-                        <span className="text-[15px] ml-[6px]">Become Sponsor</span>    
-                    </p>
-                    <p className="flex flex-row items-center my-[15px] cursor-pointer">
-                      
-                        <span className="text-[15px] ml-[6px]">Learning about me</span>    
-                    </p>
                     <p className="flex flex-row items-center my-[15px] cursor-pointer">
                   
                         <span className="text-[15px] ml-[6px]">brian.sanchis@protonmail.com</span>    
