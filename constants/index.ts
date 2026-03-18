@@ -193,10 +193,10 @@ export const Skill_data = [
   
   export const Full_stack = [
     {
-      skill_name: "Microsoft",
-      Image: "/microsoft.png",
-      width: 180,
-      height: 180,
+      skill_name: "Docker2",
+      Image: "/docker2.webp",
+      width: 70,
+      height: 70,
     },
     {
       skill_name: "Docker",
