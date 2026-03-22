@@ -93,7 +93,7 @@ const Navbar = () => {
 
       {/* Menu mobile déroulant */}
       <div
-        className={`md:hidden fixed top-[65px] left-0 w-full z-40 bg-[#030014ee] backdrop-blur-md border-t border-[#7042f861] transition-all duration-300 overflow-hidden ${
+        className={`md:hidden fixed top-[65px] left-0 w-full z-40 bg-[#03001417] backdrop-blur-md border-t border-[#7042f861] transition-all duration-300 overflow-hidden ${
           menuOpen ? "max-h-[300px] py-6" : "max-h-0"
         }`}
       >

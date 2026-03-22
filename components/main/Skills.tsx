@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Backend_skill,
   Frontend_skill,
@@ -5,11 +7,53 @@ import {
   Skill_data,
   Other_skill,
 } from "@/constants";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import SkillDataProvider from "../sub/SkillDataProvider";
 import SkillText from "../sub/SkillText";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const skillRows = [
+  Skill_data,
+  Frontend_skill,
+  Backend_skill,
+  Full_stack,
+  Other_skill,
+];
 
 const Skills = () => {
+  const rowRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      rowRefs.current.forEach((row, index) => {
+        if (!row) return;
+
+        const direction = index % 2 === 0 ? 150 : -150;
+
+        gsap.fromTo(
+          row,
+          { x: direction, opacity: 0 },
+          {
+            x: 0,
+            opacity: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: row,
+              start: "top 85%",
+              end: "top 40%",
+              scrub: 1,
+            },
+          }
+        );
+      });
+    });
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <section
       id="skills"
@@ -34,69 +78,27 @@ const Skills = () => {
         }}
       />
 
-      {/* Contenu au-dessus des dégradés */}
+      {/* Contenu */}
       <div className="relative z-20 w-full flex flex-col items-center gap-3">
         <SkillText />
 
-        <div className="flex flex-row justify-around flex-wrap mt-4 gap-5 items-center">
-          {Skill_data.map((image, index) => (
-            <SkillDataProvider
-              key={index}
-              src={image.Image}
-              width={image.width}
-              height={image.height}
-              index={index}
-            />
-          ))}
-        </div>
-
-        <div className="flex flex-row justify-around flex-wrap mt-4 gap-5 items-center">
-          {Frontend_skill.map((image, index) => (
-            <SkillDataProvider
-              key={index}
-              src={image.Image}
-              width={image.width}
-              height={image.height}
-              index={index}
-            />
-          ))}
-        </div>
-
-        <div className="flex flex-row justify-around flex-wrap mt-4 gap-5 items-center">
-          {Backend_skill.map((image, index) => (
-            <SkillDataProvider
-              key={index}
-              src={image.Image}
-              width={image.width}
-              height={image.height}
-              index={index}
-            />
-          ))}
-        </div>
-
-        <div className="flex flex-row justify-around flex-wrap mt-4 gap-5 items-center">
-          {Full_stack.map((image, index) => (
-            <SkillDataProvider
-              key={index}
-              src={image.Image}
-              width={image.width}
-              height={image.height}
-              index={index}
-            />
-          ))}
-        </div>
-
-        <div className="flex flex-row justify-around flex-wrap mt-4 gap-5 items-center">
-          {Other_skill.map((image, index) => (
-            <SkillDataProvider
-              key={index}
-              src={image.Image}
-              width={image.width}
-              height={image.height}
-              index={index}
-            />
-          ))}
-        </div>
+        {skillRows.map((row, index) => (
+          <div
+            key={index}
+            ref={(el) => { rowRefs.current[index] = el; }}
+            className="flex flex-row justify-around flex-wrap mt-4 gap-5 items-center"
+          >
+            {row.map((image, i) => (
+              <SkillDataProvider
+                key={i}
+                src={image.Image}
+                width={image.width}
+                height={image.height}
+                index={i}
+              />
+            ))}
+          </div>
+        ))}
       </div>
 
       {/* Vidéo de fond */}
