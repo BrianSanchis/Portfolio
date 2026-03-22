@@ -157,10 +157,10 @@ export const Skill_data = [
     },
   
     {
-      skill_name: "Oracle",
-      Image: "/oracle.png",
-      width: 50,
-      height: 50,
+      skill_name: "Mongodb",
+      Image: "/mongodb.png",
+      width: 35,
+      height: 35,
     },
   
   ];
