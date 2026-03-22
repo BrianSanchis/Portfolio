@@ -88,7 +88,7 @@ const HeroContent = () => {
           variants={slideInFromLeft(0.8)}
           className="text-base md:text-lg text-gray-400 my-5 max-w-[600px]"
         >
-          Apprenti ingénieur en informatique, passionné par les défis techniques. Je construis, j'explore et je sécurise.
+          Apprenti ingénieur en informatique, passionné par les défis techniques. Je construis, j&apos;explore et je sécurise.
         </motion.p>
 
         <motion.a
