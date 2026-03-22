@@ -78,7 +78,7 @@ const HeroContent = () => {
           <span>
             Construire les
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-cyan-500">
-              {" "}réseaux{" "}
+              {" "}systèmes{" "}
             </span>
             de demain
           </span>
