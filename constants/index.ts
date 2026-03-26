@@ -90,10 +90,10 @@ export const Skill_data = [
       height: 120,
     },
     {
-      skill_name: "Material UI",
-      Image: "/mui.png",
-      width: 80,
-      height: 80,
+      skill_name: "SentinelOne",
+      Image: "/SentinelOne2.png",
+      width: 110,
+      height: 110,
     },
     {
       skill_name: "React",
