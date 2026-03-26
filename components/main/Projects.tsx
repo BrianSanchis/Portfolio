@@ -85,9 +85,14 @@ const Projects = () => {
           ]}
         />
         <ProjectCard
-          src="/switching.png"
-          title="Switching"
-          description="En cours de construction, ce projet de switching vise à mettre en place une infrastructure réseau efficace et performante en utilisant des commutateurs. Il comprend la configuration et la gestion de commutateurs pour assurer une connectivité fiable entre les différents appareils du réseau, ainsi que l'implémentation de protocoles de commutation pour optimiser les performances et la sécurité du réseau."
+          src="/gitlab-preview.png"
+          title="Serveur Gitlab"
+          description="Mise en place d'une forge logicielle complète basée sur GitLab (Self-Hosted). Ce projet vise à centraliser la gestion du code source et à automatiser les cycles de développement via des pipelines CI/CD. Il inclut la configuration de GitLab Runners pour l'exécution des tests, la gestion d'un registre de conteneurs (Container Registry) et la sécurisation des accès pour une approche DevOps intégrale."
+          links={[
+            { label: "Installation & Configuration", href: "/firewall" },
+            { label: "Sécurisation", href: "/firewall" },
+            { label: "GitLab CI/CD", href: "/firewall" },
+          ]}
         />
       </div>
     </div>
