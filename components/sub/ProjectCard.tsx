@@ -1,9 +1,11 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 interface LinkItem {
   label: string;
   href: string;
+  onClick?: (href: string) => void;
 }
 
 interface Props {
@@ -33,14 +35,23 @@ const ProjectCard = ({ src, title, description, links = [] }: Props) => {
             {links.map((link: LinkItem, index: number) => (
               <div key={index} className="flex items-center gap-1">
                 <span className="text-white">•</span>
-                <a
-                  href={link.href}
-                  className="underline text-white hover:text-grey-300 transition-colors"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {link.label}
-                </a>
+                {link.onClick ? (
+                  <button
+                    onClick={() => link.onClick!(link.href)}
+                    className="underline text-white hover:text-gray-300 transition-colors cursor-pointer text-left"
+                  >
+                    {link.label}
+                  </button>
+                ) : (
+                  <Link
+                    href={link.href}
+                    className="underline text-white hover:text-gray-300 transition-colors"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {link.label}
+                  </Link>
+                )}
               </div>
             ))}
           </div>

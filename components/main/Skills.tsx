@@ -43,7 +43,7 @@ const Skills = () => {
             scrollTrigger: {
               trigger: row,
               start: "top 85%",
-              end: "top 40%",
+              end: "top 60%",
               scrub: 1,
             },
           }
