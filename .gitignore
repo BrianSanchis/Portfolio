@@ -41,4 +41,4 @@ next-env.d.ts
 .env.local
 
 # pdf files
-public/**/*.pdf
+public/*.pdf
