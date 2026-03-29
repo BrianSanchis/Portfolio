@@ -40,7 +40,7 @@ const Footer = () => {
             </div>
 
             <div className="mb-[20px] text-[15px] mt-10 text-center">
-                &copy; 2026 Brian SANCHIS Inc. Tous droits réservés
+                &copy; 2026 Brian SANCHIS Inc. Tous droits réservés.
             </div>
         </div>
     </div>
