@@ -93,7 +93,7 @@ const Projects = () => {
             title="Serveur Gitlab"
             description="Mise en place d'une forge logicielle complète basée sur GitLab (Self-Hosted). Ce projet vise à centraliser la gestion du code source et à automatiser les cycles de développement via des pipelines CI/CD. Il inclut la configuration de GitLab Runners pour l'exécution des tests, la gestion d'un registre de conteneurs (Container Registry) et la sécurisation des accès pour une approche DevOps intégrale."
             links={[
-              { label: "Installation & Configuration", href: "/resume.pdf", onClick: (href) => setModalHref(href) },
+              { label: "Installation & Configuration", href: "/Installation d'un serveur Gitlab.pdf", onClick: (href) => setModalHref(href) },
               { label: "Sécurisation", href: "/resume.pdf", onClick: (href) => setModalHref(href) },
               { label: "GitLab CI/CD", href: "/resume.pdf", onClick: (href) => setModalHref(href) },
             ]}
