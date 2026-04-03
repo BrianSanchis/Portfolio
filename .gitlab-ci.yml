@@ -1,0 +1,79 @@
+stages:
+  - test
+  - build
+  - deploy
+
+variables:
+  NODE_VERSION: "20"
+
+# Cache des dépendances entre jobs
+cache:
+  key:
+    files:
+      - package-lock.json
+  paths:
+    - node_modules/
+    - .next/cache/
+
+# ──────────────────────────────
+# STAGE 1 : TESTS
+# ──────────────────────────────
+test:
+  stage: test
+  image: node:20-alpine
+  script:
+    - npm ci
+    - npm test -- --passWithNoTests
+  only:
+    - main
+    - merge_requests
+
+# ──────────────────────────────
+# STAGE 2 : BUILD
+# ──────────────────────────────
+build:
+  stage: build
+  image: node:20-alpine
+  script:
+    - npm ci
+    - npm run build
+  artifacts:
+    paths:
+      - .next/
+      - public/
+      - package.json
+      - package-lock.json
+      - next.config.*
+    expire_in: 1 hour
+  only:
+    - main
+
+# ──────────────────────────────
+# STAGE 3 : DEPLOY
+# ──────────────────────────────
+deploy:
+  stage: deploy
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache openssh-client rsync
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh && chmod 700 ~/.ssh
+    - ssh-keyscan -H $VPS_HOST >> ~/.ssh/known_hosts
+  script:
+    - rsync -az --delete
+        --exclude='.git'
+        --exclude='node_modules'
+        ./ $VPS_USER@$VPS_HOST:$VPS_PATH
+    - ssh $VPS_USER@$VPS_HOST "
+        cd $VPS_PATH &&
+        npm ci --omit=dev &&
+        pm2 restart portfolio || pm2 start npm --name portfolio -- start
+      "
+  environment:
+    name: production
+    url: https://monportfolio.fr
+  only:
+    - main
+  needs:
+    - build

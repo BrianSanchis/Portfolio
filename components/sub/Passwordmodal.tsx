@@ -2,9 +2,8 @@
 
 import React, { useEffect, useRef, useState, useCallback } from "react";
 
-const CORRECT_CODE = process.env.NEXT_PUBLIC_CORRECT_CODE!;
-const MAX_ATTEMPTS = Number(process.env.NEXT_PUBLIC_MAX_ATTEMPTS!);
-const LOCKOUT_DURATION = Number(process.env.NEXT_PUBLIC_LOCKOUT_DURATION!);
+const MAX_ATTEMPTS = 3;
+const LOCKOUT_DURATION = 300;
 
 interface PasswordModalProps {
   href: string;
@@ -46,30 +45,41 @@ const PasswordModal = ({ href, onClose }: PasswordModalProps) => {
     return `${m}:${s}`;
   };
 
-  const handleSubmit = useCallback(() => {
+  const handleSubmit = useCallback(async () => {
     if (locked || input.length === 0) return;
 
-    if (input === CORRECT_CODE) {
-      setSuccess(true);
-      setError("");
-      setTimeout(() => {
-        window.open(href, "_blank");
-        onClose();
-      }, 800);
-    } else {
-      const newAttempts = attempts + 1;
-      setAttempts(newAttempts);
-      setShake(true);
-      setTimeout(() => setShake(false), 600);
-      setInput("");
+    try {
+      const res = await fetch("/api/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code: input }),
+      });
 
-      if (newAttempts >= MAX_ATTEMPTS) {
-        setLocked(true);
-        setCountdown(LOCKOUT_DURATION);
-        setError(`Trop de tentatives. Réessayez dans ${formatCountdown(LOCKOUT_DURATION)}.`);
+      if (res.ok) {
+        setSuccess(true);
+        setError("");
+        setTimeout(() => {
+          window.open(href, "_blank");
+          onClose();
+        }, 800);
       } else {
-        setError(`Code incorrect. ${MAX_ATTEMPTS - newAttempts} tentative${MAX_ATTEMPTS - newAttempts > 1 ? "s" : ""} restante${MAX_ATTEMPTS - newAttempts > 1 ? "s" : ""}.`);
+        const newAttempts = attempts + 1;
+        setAttempts(newAttempts);
+        setShake(true);
+        setTimeout(() => setShake(false), 600);
+        setInput("");
+
+        if (newAttempts >= MAX_ATTEMPTS) {
+          setLocked(true);
+          setCountdown(LOCKOUT_DURATION);
+          setError(`Trop de tentatives. Réessayez dans ${formatCountdown(LOCKOUT_DURATION)}.`);
+        } else {
+          const remaining = MAX_ATTEMPTS - newAttempts;
+          setError(`Code incorrect. ${remaining} tentative${remaining > 1 ? "s" : ""} restante${remaining > 1 ? "s" : ""}.`);
+        }
       }
+    } catch {
+      setError("Erreur réseau. Veuillez réessayer.");
     }
   }, [input, attempts, locked, href, onClose]);
 
@@ -91,8 +101,13 @@ const PasswordModal = ({ href, onClose }: PasswordModalProps) => {
         style={{
           background: "linear-gradient(145deg, #0f0f1a 0%, #1a1a2e 60%, #16213e 100%)",
           border: "1px solid rgba(139, 92, 246, 0.4)",
-          boxShadow: "0 30px 80px rgba(0,0,0,0.6), 0 0 60px rgba(139,92,246,0.08), inset 0 1px 0 rgba(255,255,255,0.05)",
-          animation: shake ? "shake 0.5s ease" : success ? "successPulse 0.4s ease" : "fadeInScale 0.25s ease",
+          boxShadow:
+            "0 30px 80px rgba(0,0,0,0.6), 0 0 60px rgba(139,92,246,0.08), inset 0 1px 0 rgba(255,255,255,0.05)",
+          animation: shake
+            ? "shake 0.5s ease"
+            : success
+            ? "successPulse 0.4s ease"
+            : "fadeInScale 0.25s ease",
         }}
       >
         {/* Bouton fermer */}
@@ -107,7 +122,13 @@ const PasswordModal = ({ href, onClose }: PasswordModalProps) => {
         <div className="text-center">
           <div
             className="text-4xl mb-3 transition-all duration-300"
-            style={{ filter: success ? "grayscale(0)" : locked ? "grayscale(1) brightness(0.5)" : "none" }}
+            style={{
+              filter: success
+                ? "grayscale(0)"
+                : locked
+                ? "grayscale(1) brightness(0.5)"
+                : "none",
+            }}
           >
             {success ? "✅" : locked ? "🔐" : "🔒"}
           </div>
@@ -115,7 +136,11 @@ const PasswordModal = ({ href, onClose }: PasswordModalProps) => {
             {success ? "Accès accordé" : locked ? "Accès bloqué" : "Zone sécurisée"}
           </h2>
           <p className="text-gray-500 text-xs mt-1 font-mono tracking-widest uppercase">
-            {success ? "Redirection en cours..." : locked ? `Débloqué dans ${formatCountdown(countdown)}` : "Authentification requise"}
+            {success
+              ? "Redirection en cours..."
+              : locked
+              ? `Débloqué dans ${formatCountdown(countdown)}`
+              : "Authentification requise"}
           </p>
         </div>
 
@@ -141,8 +166,12 @@ const PasswordModal = ({ href, onClose }: PasswordModalProps) => {
                 key={i}
                 className="w-3 h-3 rounded-full transition-all duration-150"
                 style={{
-                  background: i < input.length ? "linear-gradient(135deg, #a855f7, #06b6d4)" : "rgba(255,255,255,0.1)",
-                  boxShadow: i < input.length ? "0 0 8px rgba(168,85,247,0.7)" : "none",
+                  background:
+                    i < input.length
+                      ? "linear-gradient(135deg, #a855f7, #06b6d4)"
+                      : "rgba(255,255,255,0.1)",
+                  boxShadow:
+                    i < input.length ? "0 0 8px rgba(168,85,247,0.7)" : "none",
                   transform: i < input.length ? "scale(1.15)" : "scale(1)",
                 }}
               />
@@ -169,8 +198,12 @@ const PasswordModal = ({ href, onClose }: PasswordModalProps) => {
               className="w-full px-4 py-3 rounded-xl text-white text-center text-lg tracking-[0.4em] font-mono outline-none transition-all duration-200 placeholder-gray-700"
               style={{
                 background: "rgba(255,255,255,0.05)",
-                border: error ? "1px solid rgba(239,68,68,0.5)" : "1px solid rgba(139,92,246,0.3)",
-                boxShadow: error ? "0 0 15px rgba(239,68,68,0.1)" : "0 0 15px rgba(139,92,246,0.05)",
+                border: error
+                  ? "1px solid rgba(239,68,68,0.5)"
+                  : "1px solid rgba(139,92,246,0.3)",
+                boxShadow: error
+                  ? "0 0 15px rgba(239,68,68,0.1)"
+                  : "0 0 15px rgba(139,92,246,0.05)",
               }}
             />
             <button
@@ -208,14 +241,17 @@ const PasswordModal = ({ href, onClose }: PasswordModalProps) => {
         {!locked && !success && (
           <button
             onClick={handleSubmit}
-            disabled={input.length !== 6}
+            disabled={input.length === 0}
             className="w-full py-3 rounded-xl font-semibold text-sm tracking-widest uppercase transition-all duration-200"
             style={{
-              background: input.length === 6 ? "linear-gradient(135deg, #a855f7, #06b6d4)" : "rgba(255,255,255,0.05)",
-              color: input.length === 6 ? "white" : "rgba(255,255,255,0.2)",
-              border: input.length === 6 ? "none" : "1px solid rgba(255,255,255,0.08)",
-              cursor: input.length === 6 ? "pointer" : "not-allowed",
-              boxShadow: input.length === 6 ? "0 0 20px rgba(168,85,247,0.3)" : "none",
+              background:
+                input.length > 0
+                  ? "linear-gradient(135deg, #a855f7, #06b6d4)"
+                  : "rgba(255,255,255,0.05)",
+              color: input.length > 0 ? "white" : "rgba(255,255,255,0.2)",
+              border: input.length > 0 ? "none" : "1px solid rgba(255,255,255,0.08)",
+              cursor: input.length > 0 ? "pointer" : "not-allowed",
+              boxShadow: input.length > 0 ? "0 0 20px rgba(168,85,247,0.3)" : "none",
             }}
           >
             Déverrouiller
