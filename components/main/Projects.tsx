@@ -75,6 +75,10 @@ const Projects = () => {
             src="/homelab.png"
             title="Homelab"
             description="En cours de construction, mon homelab est un projet personnel visant à créer un environnement de test et d'apprentissage pour les technologies réseau et de sécurité. Il comprend des équipements tels que des routeurs, des commutateurs, des pare-feu et des serveurs, permettant de simuler des scénarios réels et d'expérimenter avec différentes configurations et outils."
+            links={[
+                { label: "Architecture", href: "/resume.pdf", onClick: (href) => setModalHref(href) },
+                { label: "Segmentation des vlan", href: "/resume.pdf", onClick: (href) => setModalHref(href) },
+            ]}
           />
           <ProjectCard
             src="/firewall.png"
@@ -83,8 +87,8 @@ const Projects = () => {
             links={[
               { label: "Installation et première configuration", href: "/resume.pdf", onClick: (href) => setModalHref(href) },
               { label: "Configuration du HA (High Availability)", href: "/resume.pdf", onClick: (href) => setModalHref(href) },
-              { label: "Mise en place du FortiManager et FortiAnalyzer", href: "/resume.pdf", onClick: (href) => setModalHref(href) },
-              { label: "Configuration du routage", href: "/resume.pdf", onClick: (href) => setModalHref(href) },
+              { label: "Mise en place d'un VPN IPsec", href: "https://share.note.sx/uci5nv33#OcY/30lbASxxVdFINbMexAlaSYm364c+unnXUK/iGEU", onClick: (href) => setModalHref(href) },
+              { label: "Config DNS", href: "/resume.pdf", onClick: (href) => setModalHref(href) },
               { label: "Matrice de flux", href: "/resume.pdf", onClick: (href) => setModalHref(href) },
             ]}
           />
@@ -93,7 +97,7 @@ const Projects = () => {
             title="Serveur Gitlab"
             description="Mise en place d'une forge logicielle complète basée sur GitLab (Self-Hosted). Ce projet vise à centraliser la gestion du code source et à automatiser les cycles de développement via des pipelines CI/CD. Il inclut la configuration de GitLab Runners pour l'exécution des tests, la gestion d'un registre de conteneurs (Container Registry) et la sécurisation des accès pour une approche DevOps intégrale."
             links={[
-              { label: "Installation & Configuration", href: "/Installation d'un serveur Gitlab.pdf", onClick: (href) => setModalHref(href) },
+              { label: "Installation & Configuration", href: "https://share.note.sx/vsq473o1#0/zz2QG/CTaj82UQHlJzbsE89HO5gksIGUt2JEkRzwg", onClick: (href) => setModalHref(href) },
               { label: "Sécurisation", href: "/resume.pdf", onClick: (href) => setModalHref(href) },
               { label: "GitLab CI/CD", href: "/resume.pdf", onClick: (href) => setModalHref(href) },
             ]}
